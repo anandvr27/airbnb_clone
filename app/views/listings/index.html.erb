@@ -1,0 +1,60 @@
+<div>
+  <div class="row">
+    <div class="col-md-7"><br/><br/><br/><br/>
+      <h2>Welcome to the world of trips.</h2>
+      <h3>Homes, experiences, and places — all in one app.</h3>
+    </div>
+    <div class="col-md-5">
+      <% data = {} %>
+      <% data["Bangalore"] = @listings.where("city_id = ?",1).size %>
+      <% data["Chennai"] = @listings.where("city_id = ?",2).size %>
+      
+      <%= pie_chart(data) %>
+    </div>
+  </div>
+</div>
+<hr>
+
+    <% @listings.each do |listing| %>
+      
+      <% if user_signed_in? %>
+        <% if listing.user.id != current_user.id %>
+        <div class="row">
+          <div class="col-md-6">
+            <img src="http://lorempixel.com/400/200/city">  
+            <h3>$ <%= listing.cost_per_night %>  <span style="font-size: 15px"><%= listing.description %></span></h3>
+          </div>
+          <div class="col-md-6">
+            <h3><%= listing.property_type %> - <%= listing.place_type %> </h3>
+            <h4><%= listing.guest_count %> guests </h4>
+            <h5><%= listing.city.name %> - <%= listing.locality.name %></h5>
+            <h5><span style="color: grey"><%= listing.user.email %></h5></span><br/>
+            <%= link_to 'Show', listing,class: "btn btn-primary" %>
+            <%= link_to 'Book', new_listing_reservation_path(listing_id: listing.id),class: "btn btn-primary" %>
+          </div>
+        </div>
+        <hr> 
+        <% end %>
+      <% else %>
+          <div class="row">
+          <div class="col-md-6">
+            <img src="http://lorempixel.com/400/200/city">  
+            <h3>$ <%= listing.cost_per_night %>  <span style="font-size: 15px"><%= listing.description %></span></h3>
+          </div>
+          <div class="col-md-6">
+            <h3><%= listing.property_type %> - <%= listing.place_type %> </h3>
+            <h4><%= listing.guest_count %> guests </h4>
+            <h5><%= listing.city.name %> - <%= listing.locality.name %></h5>
+            <h5><span style="color: grey"><%= listing.user.email %></span></h5><br/>
+            <%= link_to 'Show', listing,class: "btn btn-primary" %>
+            <%= link_to 'Book', new_listing_reservation_path(listing_id: listing.id),class: "btn btn-primary" %>
+          </div>
+        </div>
+           <hr> 
+       <% end %>      
+      
+    <% end %>
+  
+
+<br>
+

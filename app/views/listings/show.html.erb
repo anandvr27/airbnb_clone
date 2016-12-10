@@ -1,0 +1,100 @@
+<div class="row">
+<div class="col-md-5">
+<p>
+  <strong>Property type:</strong>
+  <%= @listing.property_type %>
+</p>
+
+<p>
+  <strong>Place type:</strong>
+  <%= @listing.place_type %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @listing.description %>
+</p>
+
+<p>
+  <strong>Guest count:</strong>
+  <%= @listing.guest_count %>
+</p>
+
+<p>
+  <strong>Amenities:</strong>
+  <% @listing.amenities.each do |amenity| %>
+    <%= amenity.name %>,
+  <%end%>
+</p>
+
+<p>
+  <strong>Cost per night:</strong>
+  <%= @listing.cost_per_night %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @listing.city.name %>
+</p>
+
+<p>
+  <strong>Locality:</strong>
+  <%= @listing.locality.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @listing.address %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @listing.user.email %>
+</p>
+<% if user_signed_in? %>
+        <% if @listing.user.id == current_user.id %>
+            <%= link_to 'Edit', edit_listing_path(@listing),class: "btn btn-default" %> 
+        <% end %>
+<% end %>
+<%= link_to 'Back', listings_path,class: "btn btn-default" %> 
+<% if user_signed_in? %>
+  <% if @listing.user.id != current_user.id %>
+    <%= link_to 'Book', new_listing_reservation_path(listing_id: @listing.id),class: "btn btn-default" %> <br/><br/>
+  <% end %>
+<% end %>
+</div>
+<div class="col-md-7">
+<img src="http://lorempixel.com/600/300/city">  
+</div>
+</div>
+
+
+</br></br>
+<% if @listing.ratings.size != 0 %>
+<h4> Reviews </h4>
+
+<% @listing.ratings.each do |rating| %>
+  <b><%= rating.user.email %> - <%= rating.star_rating %> stars  </b> <br/>
+  <%= rating.comments %>
+  <hr>
+<% end %>
+
+<% if user_signed_in? %>
+  <% if @listing.user.id != current_user.id %>
+    <%= form_for @listing.ratings.build do |f| %>
+    <div class="field form-group">
+      <%= f.label :Add_Review %> <br/>
+      <%= f.text_area :comments, class:"form-control",style:"width:50%" %>
+    </div>
+    <div class="field form-group">
+    <%= f.select :star_rating, [1,2,3,4,5],{},{prompt:"Select Rating",class:"form-control", style:"width:10%"} %> 
+    </div>
+    <%= f.hidden_field :listing_id,value: @listing.id %>
+    <%= f.hidden_field :user_id,value: @listing.user.id %>
+    <div class="actions form-group">
+    <%= f.submit class:"btn btn-primary"%>
+    </div>
+    <%end%>
+  <% end %>
+<% end %>
+<% end %>

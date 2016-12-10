@@ -1,0 +1,2 @@
+json.extract! listing, :id, :property_type, :place_type, :description, :guest_count, :cost_per_night, :city_id, :locality_id, :address, :user_id, :created_at, :updated_at
+json.url listing_url(listing, format: :json)

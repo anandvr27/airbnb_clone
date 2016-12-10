@@ -1,0 +1,57 @@
+<%= form_for(@listing) do |f| %>
+  <% if @listing.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
+
+      <ul>
+      <% @listing.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= f.label :property_type %><br>
+    <%= f.select :property_type, ["House","Apartment","Service Apartment","Hostel","Hut"], {},{prompt:"Select place type", class:"form-control", style:"width:50%"} %></br>
+  </div>
+  <div class="field form-group">
+    <%= f.label :place_type %><br>
+    <%= f.select :place_type, ["Entire place","Private room","Shared room"], {},{prompt:"Select place type", class:"form-control", style:"width:50%"} %></br>
+  </div>
+  <div class="field form-group">
+    <%= f.label :description %><br>
+    <%= f.text_area :description ,class:"form-control",style:"width:50%"%>
+  </div>
+  <div class="field  form-group">
+    <%= f.label :guest_count %><br>
+    <%= f.number_field :guest_count,class:"form-control",style:"width:10%" %>
+  </div>
+
+
+  <div class="field form-group">
+    <%= f.label :amenities_id %><br>
+    <%= f.collection_check_boxes :amenity_ids, Amenity.all, :id, :name,{},{class:"inline-checkbox", style:"width:2%"} %>
+  </div>
+
+
+  <div class="field form-group">
+    <%= f.label :cost_per_night %><br>
+    <%= f.number_field :cost_per_night,class:"form-control",style:"width:10%" %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :city_id %><br>
+    <%= f.collection_select :city_id, City.all, :id, :name, {},{prompt:"Select place type", class:"form-control", style:"width:50%"} %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :locality_id %><br>
+    <%= f.collection_select :locality_id, Locality.all, :id, :name, {},{prompt:"Select place type", class:"form-control", style:"width:50%"} %>
+  </div>
+  <div class="field form-group">
+    <%= f.label :address %><br>
+    <%= f.text_area :address,class:"form-control",style:"width:50%" %>
+  </div>
+  <div class="actions form-group">
+    <%= f.submit class:"btn btn-primary"%>
+  </div>
+<% end %>

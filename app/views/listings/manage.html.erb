@@ -1,0 +1,28 @@
+<h2>Manage your Listings</h2>
+<hr>
+
+
+    <% @listings.each do |listing| %>
+        
+            <div class="row">
+          <div class="col-md-6">
+            <img src="http://lorempixel.com/400/200/city">  
+            <h3>$ <%= listing.cost_per_night %>  <span style="font-size: 15px"><%= listing.description %></span></h3>
+          </div>
+          <div class="col-md-6">
+            <h3><%= listing.property_type %> - <%= listing.place_type %> </h3>
+            <h4><%= listing.guest_count %> guests </h4>
+            <h5><%= listing.address %></h5>
+            <h5><%= listing.city.name %> - <%= listing.locality.name %></h5><br/>
+            <%= link_to 'Show', listing,class: "btn btn-primary" %>
+            <%= link_to 'Edit', edit_listing_path(listing),class: "btn btn-primary" %>
+            <%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' },class: "btn btn-primary" %>
+          </div>
+        </div>
+        <hr>
+       
+    <% end %>
+
+
+
+
